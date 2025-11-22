@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anon-Tools | Tüm Kali Araç Komut Rehberi</title>
+    <style>
+        /* GENEL TEMA VE YAZI TİPİ AYARLARI */
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #0d0d0d; /* Çok Koyu Arka Plan */
+            color: #00ff41; /* Yeşil Matrix/Hacker Yazı Rengi */
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden; /* Yatay kaydırmayı engelle */
+        }
+
+        h1, h2 {
+            color: #00cc33; /* Parlak Yeşil Başlıklar */
+            text-align: center;
+            border-bottom: 2px solid #005511;
+            padding-bottom: 10px;
+        }
+
+        /* CONTAINER YAPISI */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #1a1a1a;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+            border-radius: 5px;
+        }
+
+        /* ACCORDION (AÇILIR-KAPANIR) STİLLERİ */
+        .tool-category {
+            margin-bottom: 15px;
+            border: 1px solid #005511;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .category-header {
+            background-color: #222;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .category-header:hover {
+            background-color: #333;
+        }
+
+        .category-header::after {
+            content: '+';
+            font-size: 1.5em;
+            transition: transform 0.3s;
+        }
+
+        .tool-category.active .category-header::after {
+            content: '-';
+            transform: rotate(180deg);
+        }
+
+        .category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background-color: #2a2a2a;
+            padding: 0 15px;
+        }
+
+        /* ARAÇ DETAY STİLLERİ */
+        .tool-detail {
+            border-bottom: 1px dashed #005511;
+            padding: 15px 0;
+        }
+
+        .tool-detail:last-child {
+            border-bottom: none;
+        }
+
+        .tool-detail h3 {
+            color: #00ff41;
+            margin-top: 0;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .tool-detail p {
+            margin: 5px 0;
+            padding-left: 10px;
+            border-left: 3px solid #00cc33;
+        }
+        
+        /* KOMUT LİSTESİ STİLLERİ */
+        .command-list {
+            margin-top: 15px;
+            padding-left: 0;
+        }
+
+        .command-item {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            background-color: #333;
+            padding: 8px;
+            border-radius: 3px;
+            align-items: flex-start;
+        }
+
+        .command-syntax {
+            flex-basis: 30%; /* Komutun yer aldığı alan */
+            font-weight: bold;
+            color: #ff9900; /* Komut rengi */
+            padding-right: 15px;
+            word-break: break-all;
+        }
+
+        .command-description {
+            flex-basis: 65%; /* Açıklamanın yer aldığı alan */
+            color: #fff; /* Açıklama rengi */
+            font-size: 0.9em;
+        }
+
+        .code-block {
+            background-color: #000;
+            color: #ff9900;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            margin-top: 5px;
+            border: 1px solid #333;
+        }
+        
+        @media (max-width: 768px) {
+            .command-syntax, .command-description {
+                flex-basis: 100%;
+                padding-right: 0;
+                margin-bottom: 5px;
+            }
+            .command-item {
+                flex-direction: column;
+            }
+        }
+
+        /* FOOTER STİLİ */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1><span style="color: white;">Anon-Tools</span> | Kapsamlı Kali Komut Rehberi</h1>
+    <h2>Temel Kategoriler ve En Çok Kullanılan Araçlar</h2>
+
+    <div class="tool-category">
+        <div class="category-header">
+            1. Bilgi Toplama (Information Gathering) 🕵️
+        </div>
+        <div class="category-content">
+            <div class="tool-detail">
+                <h3>Nmap (Network Mapper)</h3>
+                <p><strong>Amaç:</strong> Ağdaki cihazları, açık portları, çalışan servisleri ve işletim sistemlerini tespit etmek.</p>
+                <h4>Temel Nmap Komutları</h4>
+                <div class="command-list">
+                    <div class="command-item"><div class="command-syntax">nmap -sS [hedef]</div><div class="command-description">Gizli SYN (Stealth) taraması yapar, çoğu güvenlik duvarını atlatabilir.</div></div>
+                    <div class="command-item"><div class="command-syntax">nmap -sV [hedef]</div><div class="command-description">Açık portlarda çalışan servislerin versiyonlarını detaylıca tespit eder.</div></div>
+                    <div class="command-item"><div class="command-syntax">nmap -p- [hedef]</div><div class="command-description">Tüm 65535 TCP portunu tarar (uzun sürer).</div></div>
+                    <div class="command-item"><div class="command-syntax">nmap -O [hedef]</div><div class="command-description">Hedefin işletim sistemini tahmin etmeye çalışır.</div></div>
+                    <div class="command-item"><div class="command-syntax">nmap -A [hedef]</div><div class="command-description">Agresif tarama: OS tespiti, versiyon tespiti ve NSE scriptlerini çalıştırır.</div></div>
+                </div>
+            </div>
+            <div class="tool-detail">
+                <h3>theHarvester</h3>
+                <p><strong>Amaç:</strong> Açık kaynaklardan (Google, Bing, LinkedIn vb.) e-posta, alt alan adı, sanal ana bilgisayar ve çalışanları toplamak.</p>
+                <h4>Temel theHarvester Komutları</h4>
+                <div class="command-list">
+                    <div class="command-item"><div class="command-syntax">theharvester -d [domain] -l 500 -b google</div><div class="command-description">Google'dan 500 sonuç sınırlamasıyla verilen alan adı için bilgi toplar.</div></div>
+                    <div class="command-item"><div class="command-syntax">theharvester -d [domain] -b all</div><div class="command-description">Desteklenen tüm kaynakları (all) kullanarak kapsamlı bilgi toplar.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tool-category">
+        <div class="category-header">
+            2. Zafiyet Analizi (Vulnerability Analysis) ⚠️
+        </div>
+        <div class="category-content">
+            <div class="tool-detail">
+                <h3>Nikto</h3>
+                <p><strong>Amaç:</strong> Web sunucularındaki bilinen zafiyetleri, riskli dosyaları ve güncel olmayan bileşenleri hızlıca taramak.</p>
+                <h4>Temel Nikto Komutları</h4>
+                <div class="command-list">
+                    <div class="command-item"><div class="command-syntax">nikto -h [url]</div><div class="command-description">Web sitesi üzerinde standart testleri çalıştırır.</div></div>
+                    <div class="command-item"><div class="command-syntax">nikto -h [url] -Tuning 123</div><div class="command-description">Belirlenen test türlerini çalıştırır (Örn: 1: Dosya kontrolü, 2: Yanlış yapılandırma).</div></div>
+                </div>
+            </div>
+            <div class="tool-detail">
+                <h3>WPScan</h3>
+                <p><strong>Amaç:</strong> WordPress sitelerindeki zafiyetleri (tema, eklenti, kullanıcı) tespit etmek.</p>
+                <h4>Temel WPScan Komutları</h4>
+                <div class="command-list">
+                    <div class="command-item"><div class="command-syntax">wpscan --url [url] --enumerate u</div><div class="command-description">Site üzerinde bilinen kullanıcı adlarını listeler.</div></div>
+                    <div class="command-item"><div class="command-syntax">wpscan --url [url] --enumerate p</div><div class="command-description">Yüklü eklentileri tarar ve bilinen zafiyetlerini kontrol eder.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tool-category">
+        <div class="category-header">
+            3. Web Uygulama Analizi (Web Application Analysis) 🕸️
+        </div>
+        <div class="category-content">
+            <div class="tool-detail">
+                <h3>sqlmap</h3>
+                <p><strong>Amaç:</strong> Otomatik SQL Enjeksiyonu (SQLi) zafiyetlerini tespit etmek, veritabanını ele geçirmek ve verileri dökmek.</p>
+                <h4>Temel sqlmap Komutları</h4>
+                <div class="command-list">
+                    <div class="command-item"><div class="command-syntax">sqlmap -u "[url]?id=1" --dbs</div><div class="command-description">Verilen URL'deki parametreyi test eder ve veritabanı isimlerini listeler.</div></div>
+                    <div class="command-item"><div class="command-syntax">sqlmap -u "[url]" -p [parametre] --current-user</div><div class="command-description">Veritabanında oturum açan kullanıcı adını döndürür.</div></div>
+                    <div class="command-item"><div class="command-syntax">sqlmap -u "[url]" --dump -D [db] -T [tablo]</div><div class="command-description">Belirtilen veritabanındaki tablonun tüm verilerini indirir.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tool-category">
+        <div class="category-header">
+            4. Parola Saldırıları (Password Attacks) 🔑
+        </div>
+        <div class="category-content">
+            <div class="tool-detail">
+                <h3>Hydra</h3>
+                <p><strong>Amaç:</strong> SSH, FTP, HTTP POST/GET, Telnet gibi çoklu protokoller için hızlı kaba kuvvet (brute-force) saldırıları yapmak.</p>
+                <h4>Temel Hydra Komutları</h4>
+                <div class="command-list">
+                    <div class="command-item"><div class="command-syntax">hydra -l [kullanıcı] -P [parola_listesi] [ip] ssh</div><div class="command-description">Tek bir kullanıcı için parola listesi kullanarak SSH kaba kuvvet saldırısı yapar.</div></div>
+                    <div class="command-item"><div class="command-syntax">hydra -L [kullanıcı_listesi] -P [parola_listesi] [ip] http-post-form "[form_detayları]"</div><div class="command-description">HTTP POST formuna karşı sözlük saldırısı yapar.</div></div>
+                </div>
+            </div>
+            <div class="tool-detail">
+                <h3>John the Ripper</h3>
+                <p><strong>Amaç:</strong> Parola hashlerini kırmak için kullanılan güçlü bir araç.</p>
+                <h4>Temel JTR Komutları</h4>
+                <div class="command-list">
+                    <div class="command-item"><div class="command-syntax">john --wordlist=[sözlük] [hash_dosyası]</div><div class="command-description">Sözlük saldırısı ile hash dosyasındaki parolaları kırmaya çalışır.</div></div>
+                    <div class="command-item"><div class="command-syntax">john --show [hash_dosyası]</div><div class="command-description">Başarıyla kırılmış parolaları gösterir.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tool-category">
+        <div class="category-header">
+            5. Sömürü Araçları (Exploitation Tools) 🔥
+        </div>
+        <div class="category-content">
+            <div class="tool-detail">
+                <h3>Metasploit Framework</h3>
+                <p><strong>Amaç:</strong> Sızma testi için en popüler platform. Zafiyetleri sömürme, payload oluşturma ve oturum sonrası işlemleri gerçekleştirme.</p>
+                <h4>Temel MSF Komutları</h4>
+                <div class="command-list">
+                    <div class="command-item"><div class="command-syntax">msfconsole</div><div class="command-description">Metasploit konsolunu başlatır.</div></div>
+                    <div class="command-item"><div class="command-syntax">search [exploit_adı]</div><div class="command-description">Modül arar (exploit, payload, auxiliary).</div></div>
+                    <div class="command-item"><div class="command-syntax">use [modül_yolu]</div><div class="command-description">Seçilen modülü kullanmaya başlar.</div></div>
+                    <div class="command-item"><div class="command-syntax">show options</div><div class="command-description">Modülün yapılandırılması gereken değişkenlerini gösterir (RHOSTS, LHOST, vb.).</div></div>
+                    <div class="command-item"><div class="command-syntax">set [değişken] [değer]</div><div class="command-description">Gerekli değişkeni ayarlar.</div></div>
+                    <div class="command-item"><div class="command-syntax">exploit / run</div><div class="command-description">Sömürü işlemini başlatır.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tool-category">
+        <div class="category-header">
+            6. Kablosuz Ağ Saldırıları (Wireless Attacks) 📶
+        </div>
+        <div class="category-content">
+            <div class="tool-detail">
+                <h3>Aircrack-ng</h3>
+                <p><strong>Amaç:</strong> Kablosuz ağları denetlemek ve WEP/WPA/WPA2 anahtarlarını kırmak için kullanılan araç takımı.</p>
+                <h4>Temel Aircrack-ng Komutları</h4>
+                <div class="command-list">
+                    <div class="command-item"><div class="command-syntax">airmon-ng check kill</div><div class="command-description">Çakışan ağ süreçlerini durdurur.</div></div>
+                    <div class="command-item"><div class="command-syntax">airmon-ng start [arayüz]</div><div class="command-description">Ağ arayüzünü izleme (monitor) moduna alır.</div></div>
+                    <div class="command-item"><div class="command-syntax">airodump-ng [izleme_arayüzü]</div><div class="command-description">Çevredeki kablosuz ağları ve istemcileri listeler.</div></div>
+                    <div class="command-item"><div class="command-syntax">aircrack-ng [cap_dosyası]</div><div class="command-description">Yakalanan .cap dosyası ile şifre kırma işlemini başlatır.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tool-category">
+        <div class="category-header">
+            7. Koklama ve Sahtecilik (Sniffing & Spoofing) 👃
+        </div>
+        <div class="category-content">
+            <div class="tool-detail">
+                <h3>Wireshark</h3>
+                <p><strong>Amaç:</strong> Ağ trafiğini gerçek zamanlı olarak yakalayan ve analiz eden, görsel tabanlı bir araç.</p>
+                <h4>Temel Wireshark Kullanım Notları</h4>
+                <div class="command-list">
+                    <div class="command-item"><div class="command-syntax">tcp.port == 80</div><div class="command-description">Sadece 80. port (HTTP) trafiğini filtreler.</div></div>
+                    <div class="command-item"><div class="command-syntax">ip.addr == [ip_adresi]</div><div class="command-description">Belirli bir IP adresine giden veya gelen paketleri gösterir.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+
+<footer>
+    <p>Bu site yalnızca eğitim ve yasal sızma testi amaçlıdır. İzinsiz ve yasadışı kullanım kesinlikle yasaktır.</p>
+</footer>
+
+<script>
+    // JavaScript ile Açılır Kapanır (Accordion) işlevselliği
+    document.addEventListener('DOMContentLoaded', () => {
+        const headers = document.querySelectorAll('.category-header');
+
+        headers.forEach(header => {
+            header.addEventListener('click', () => {
+                const category = header.parentElement;
+                const content = header.nextElementSibling;
+                const isActive = category.classList.contains('active');
+
+                // Tüm kategorileri kapat
+                document.querySelectorAll('.tool-category').forEach(cat => {
+                    cat.classList.remove('active');
+                    cat.querySelector('.category-content').style.maxHeight = null;
+                });
+
+                // Tıklanan kategoriyi aç/kapat
+                if (!isActive) {
+                    category.classList.add('active');
+                    // İçeriğin tam boyutunu hesaplayarak açılmasını sağlar
+                    content.style.maxHeight = content.scrollHeight + 50 + "px"; // Ekstra 50px tampon
+                } else {
+                    category.classList.remove('active');
+                    content.style.maxHeight = null;
+                }
+            });
+        });
+        
+        // Sayfa yüklendiğinde varsayılan olarak açık olan bir kategori varsa boyutunu ayarla
+        document.querySelectorAll('.tool-category.active .category-content').forEach(content => {
+            content.style.maxHeight = content.scrollHeight + 50 + "px";
+        });
+    });
+</script>
+
+</body>
+</html>
