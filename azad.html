@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turkan Anonymous Site</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background: #0b0f11;
+  color: #33ff77;
+  font-family: 'Courier New', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+}
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #0b0f11;
+  border: 2px solid #33ff77;
+  color: #33ff77;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  background: #33ff77;
+  color: #0b0f11;
+}
+#info {
+  margin-top: 20px;
+  font-size: 1.1em;
+  max-width: 400px;
+}
+</style>
+</head>
+<body>
+<h1>Anonymous Tarzı Bilgisayar Parçaları</h1>
+<p>Butonlara basarak bilgisayar parçalarını görebilirsin.</p>
+
+<button onclick="show('CPU')">CPU</button>
+<button onclick="show('RAM')">RAM</button>
+<button onclick="show('GPU')">GPU</button>
+<button onclick="show('Anakart')">Anakart</button>
+<button onclick="show('Depolama')">Depolama</button>
+<button onclick="show('PSU')">Güç Kaynağı</button>
+
+<div id="info"></div>
+
+<script>
+function show(part) {
+  const data = {
+    CPU: 'CPU: Bilgisayarın merkezi işlem birimi.',
+    RAM: 'RAM: Geçici hafıza, programları hızlı çalıştırır.',
+    GPU: 'GPU: Grafik işlem birimi, oyun ve grafik için.',
+    Anakart: 'Anakart: Tüm parçaların bağlı olduğu ana kart.',
+    Depolama: 'Depolama: HDD/SSD, verilerin saklandığı yer.',
+    PSU: 'PSU: Güç kaynağı, tüm parçaları besler.'
+  };
+  document.getElementById('info').innerText = data[part];
+}
+</script>
+</body>
+</html>
