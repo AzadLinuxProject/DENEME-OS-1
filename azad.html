@@ -3,66 +3,162 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Turkan Anonymous Site</title>
+<title>Turkan Anonymous Blog</title>
+
+<!-- Google Site Doğrulama -->
+<meta name="google-site-verification" content="EvCP7-kaiHOTvW0zSo4EVZPu0ey___xy4AMqBNbk4_I" />
+
+<!-- SEO Meta -->
+<meta name="description" content="Turkan Anonymous Blog - Bilgisayar parçaları, teknoloji ve yazılım yazıları.">
+<meta name="keywords" content="Anonymous, Blog, Bilgisayar, Teknoloji, Yazılım">
+<meta name="author" content="Turkan">
+
 <style>
+/* Genel Stil */
 body {
   margin: 0;
   padding: 0;
   background: #0b0f11;
   color: #33ff77;
   font-family: 'Courier New', monospace;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  text-align: center;
 }
-button {
-  margin-top: 20px;
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px 20px;
+  border-bottom: 1px solid #33ff77;
+}
+
+h1 {
+  margin: 0;
+}
+
+button {
   background: #0b0f11;
   border: 2px solid #33ff77;
   color: #33ff77;
+  padding: 5px 15px;
   cursor: pointer;
   transition: 0.3s;
 }
+
 button:hover {
   background: #33ff77;
   color: #0b0f11;
 }
-#info {
-  margin-top: 20px;
-  font-size: 1.1em;
-  max-width: 400px;
+
+#blog-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.blog-post {
+  border-bottom: 1px solid #33ff77;
+  padding: 10px 0;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  background: #0b0f11;
+  color: #33ff77;
+  border: 1px solid #33ff77;
+  font-family: 'Courier New', monospace;
+  resize: vertical;
+  padding: 5px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 5px;
+  background: #0b0f11;
+  color: #33ff77;
+  border: 1px solid #33ff77;
+}
+
+#dev-panel {
+  display: none;
+  padding: 20px;
+  border-top: 1px solid #33ff77;
 }
 </style>
 </head>
 <body>
-<h1>Anonymous Tarzı Bilgisayar Parçaları</h1>
-<p>Butonlara basarak bilgisayar parçalarını görebilirsin.</p>
 
-<button onclick="show('CPU')">CPU</button>
-<button onclick="show('RAM')">RAM</button>
-<button onclick="show('GPU')">GPU</button>
-<button onclick="show('Anakart')">Anakart</button>
-<button onclick="show('Depolama')">Depolama</button>
-<button onclick="show('PSU')">Güç Kaynağı</button>
+<header>
+  <h1>Anonymous Blog</h1>
+  <button id="dev-btn">Geliştirici</button>
+</header>
 
-<div id="info"></div>
+<div id="blog-container">
+  <!-- Blog yazıları buraya gelecek -->
+</div>
+
+<div id="dev-panel">
+  <h2>Blog Yazısını Düzenle</h2>
+  <input type="text" id="blog-title" placeholder="Başlık">
+  <textarea id="blog-content" placeholder="İçerik"></textarea>
+  <button id="save-post">Kaydet</button>
+</div>
 
 <script>
-function show(part) {
-  const data = {
-    CPU: 'CPU: Bilgisayarın merkezi işlem birimi.',
-    RAM: 'RAM: Geçici hafıza, programları hızlı çalıştırır.',
-    GPU: 'GPU: Grafik işlem birimi, oyun ve grafik için.',
-    Anakart: 'Anakart: Tüm parçaların bağlı olduğu ana kart.',
-    Depolama: 'Depolama: HDD/SSD, verilerin saklandığı yer.',
-    PSU: 'PSU: Güç kaynağı, tüm parçaları besler.'
-  };
-  document.getElementById('info').innerText = data[part];
+// Geliştirici modu
+const devBtn = document.getElementById('dev-btn');
+const devPanel = document.getElementById('dev-panel');
+let isDev = false;
+
+devBtn.addEventListener('click', () => {
+  if (!isDev) {
+    const pw = prompt("Geliştirici şifresi:");
+    if (pw === "3454") {
+      isDev = true;
+      devPanel.style.display = "block";
+      devBtn.style.display = "none";
+      renderBlog();
+    } else {
+      alert("Şifre yanlış!");
+    }
+  }
+});
+
+// Blog verisi
+let blogPosts = [
+  {title: "İlk Yazı", content: "Anonymous bloguma hoş geldiniz!"},
+];
+
+// Blogu gösterme fonksiyonu
+function renderBlog() {
+  const container = document.getElementById('blog-container');
+  container.innerHTML = "";
+  blogPosts.forEach((post, index) => {
+    const div = document.createElement('div');
+    div.className = "blog-post";
+    div.innerHTML = `<h3>${post.title}</h3><p>${post.content}</p>`;
+    container.appendChild(div);
+  });
 }
+
+// Kaydet butonu
+document.getElementById('save-post').addEventListener('click', () => {
+  const title = document.getElementById('blog-title').value;
+  const content = document.getElementById('blog-content').value;
+  if (title && content) {
+    blogPosts.push({title, content});
+    document.getElementById('blog-title').value = "";
+    document.getElementById('blog-content').value = "";
+    renderBlog();
+  } else {
+    alert("Başlık ve içerik boş olamaz!");
+  }
+});
+
+// İlk render (kullanıcı görünümü)
+renderBlog();
 </script>
+
 </body>
 </html>
